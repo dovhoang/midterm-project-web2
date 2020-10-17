@@ -5,13 +5,14 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const expressValidator = require('express-validator');
 const port = process.env.PORT || 3000;
+require('dotenv').config();
 
 const app = express();
 
 //import route
 const authRoute = require('./routes/authRoute');
 
-require('dotenv').config();
+
 
 // connect db
 mongoose
