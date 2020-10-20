@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
+
 const { userSignupValidator } = require('../validator')
-const { signup, signin, signout, requireSignin
+const { signup, signin, signout, signinWithGoogle, requireSignin
 } = require('../controllers/authController');
 
 router.post('/signup', userSignupValidator, signup);
@@ -10,6 +12,14 @@ router.post('/signout', signout);
 router.get('/profile', requireSignin, (req, res) => {
     res.send('profile');
 });
+
+router.get('/auth/google', passport.authenticate('google', {
+    scope: ['profile', 'email']
+}));
+
+router.get('/auth/google/callback', passport.authenticate('google'),
+    signinWithGoogle
+);
 
 
 module.exports = router;

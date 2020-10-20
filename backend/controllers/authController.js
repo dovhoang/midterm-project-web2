@@ -32,7 +32,7 @@ exports.signin = (req, res) => {
             })
         }
 
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { algorithm: 'RS256' });
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
         res.cookie('token', token, { expires: new Date(Date.now() + 86400) })
         const { _id, email, name } = user;
         res.json({
@@ -56,3 +56,18 @@ exports.requireSignin = expressJwt({
     userProperty: 'auth',
     algorithms: ['RS256']
 });
+
+exports.signinWithGoogle = (req, res) => {
+    const user = req.user;
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    res.cookie('token', token, { expires: new Date(Date.now() + 86400) })
+    const { _id, email, name } = user;
+    res.json({
+        token: token,
+        user: {
+            _id,
+            email,
+            name
+        }
+    })
+}

@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
             require: true,
             unique: true
         },
+        googleId: String,
         name: {
             type: String,
             trim: true,
@@ -17,8 +18,7 @@ const userSchema = new mongoose.Schema(
             maxlength: 32,
         },
         hash_password: {
-            type: String,
-            required: true
+            type: String
         },
         salt: String,
     },
