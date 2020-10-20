@@ -4,26 +4,32 @@ const expressJwt = require('express-jwt');
 
 exports.signup = (req, res) => {
     const user = new User(req.body);
-    user.save((error, user) => {
-        if (error) {
-            return res.status(400).json({
-                error: 'Email đã được sử dụng'
+    const { username } = user;
+
+    User.findOne({ username }, (error, fUser) => {
+        if (fUser) return res.status(401).json({
+            error: 'Username đã tồn tại'
+        });
+        user.save((error, user) => {
+            user.salt = undefined;
+            user.hash_password = undefined;
+            res.json({
+                user: user
             })
-        }
-        user.salt = undefined;
-        user.hash_password = undefined;
-        res.json({
-            user
         })
+
     })
+
+
+
 }
 
 exports.signin = (req, res) => {
-    const { email, password } = req.body;
-    User.findOne({ email }, (error, user) => {
+    const { username, password } = req.body;
+    User.findOne({ username }, (error, user) => {
         if (error || !user) {
             return res.status(400).json({
-                error: 'Email không đúng'
+                error: 'Username không đúng'
             })
         }
         if (!user.authenticate(password)) {
@@ -34,12 +40,12 @@ exports.signin = (req, res) => {
 
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
         res.cookie('token', token, { expires: new Date(Date.now() + 86400) })
-        const { _id, email, name } = user;
+        const { _id, username, name } = user;
         res.json({
             token: token,
             user: {
                 _id,
-                email,
+                username,
                 name
             }
         })
@@ -59,14 +65,15 @@ exports.requireSignin = expressJwt({
 
 exports.signinWithGoogle = (req, res) => {
     const user = req.user;
+    console.log(user);
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
     res.cookie('token', token, { expires: new Date(Date.now() + 86400) })
-    const { _id, email, name } = user;
+    const { _id, username, name } = user;
     res.json({
         token: token,
         user: {
             _id,
-            email,
+            username,
             name
         }
     })

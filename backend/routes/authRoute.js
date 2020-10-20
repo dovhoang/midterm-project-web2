@@ -21,5 +21,10 @@ router.get('/auth/google/callback', passport.authenticate('google'),
     signinWithGoogle
 );
 
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
+
+router.get('/auth/facebook/callback',
+    passport.authenticate('facebook'), signinWithGoogle);
+
 
 module.exports = router;
