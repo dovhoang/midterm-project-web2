@@ -13,6 +13,7 @@ const app = express();
 
 //import route
 const authRoute = require('./routes/authRoute');
+const boardRoute = require('./routes/boardRoute');
 
 // connect db
 mongoose
@@ -32,6 +33,7 @@ app.use(passport.session());
 
 //route middleware
 app.use('/api', authRoute);
+app.use('/api', boardRoute);
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`);
