@@ -4,11 +4,10 @@ const { createBoard, getBoardsByUserId, deleteBoard, boardById, editNameBoard } 
 const { userById } = require('../controllers/userController')
 const { requireSignin } = require('../controllers/authController')
 
-
-router.post('/create/board', createBoard);
-router.delete('/delete/board/:boardId', deleteBoard);
 router.get('/:userId/boards', getBoardsByUserId);
-router.put('/update/boards/:boardId', editNameBoard);
+router.post('/create/board', createBoard);
+router.delete('boards/delete/:boardId', deleteBoard);
+router.put('/update/board/:boardId', editNameBoard);
 
 
 router.param("userId", userById);

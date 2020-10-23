@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { ObjectId } = mongoose.Schema;
 
-const boardColumnSchema = new mongoose.Schema({
-    boardId: {
+const tagSchema = new mongoose.Schema({
+    board: {
         type: ObjectId,
         ref: 'Board'
     },
@@ -14,8 +14,9 @@ const boardColumnSchema = new mongoose.Schema({
     },
     type: {
         type: Number,
-        require: true
+        required: true
     }
-})
+},
+    { timestamps: true })
 
-module.exports = mongoose.model('BoardColumn', boardColumnSchema);
+module.exports = mongoose.model('Tag', tagSchema);

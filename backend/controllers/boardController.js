@@ -11,12 +11,13 @@ exports.boardById = (req, res, next, id) => {
 }
 
 exports.getBoardsByUserId = (req, res) => {
-    Board.find()
+
+    Board.find({ user: req.user })
         .populate('user')
         .exec((error, boards) => {
             if (error || !boards) {
                 return res.status(400).json({
-                    error: 'user not found!'
+                    error: 'boards not found!'
                 })
             }
             res.json({ boards })
@@ -49,8 +50,14 @@ exports.deleteBoard = (req, res) => {
 }
 
 exports.editNameBoard = (req, res) => {
-    const boardName = req.body.boardName;
+    const boardName = req.body.name;
     const board = req.board;
-    Board.findOneAndUpdate({ board }, { name: boardName })
+    Board.findOneAndUpdate({ _id: board._id }, { name: boardName })
+        .exec((error, board) => {
+            if (error) {
+                return res.status(400).json({ error });
+            }
+            res.json({ Message: `Board is updated!` })
+        })
 }
 
