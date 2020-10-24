@@ -3,9 +3,10 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const cors = require('cors');
 const expressValidator = require('express-validator');
 const passport = require('passport');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 require('dotenv').config();
 require('./services/passport');
 
@@ -30,6 +31,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(expressValidator());
 app.use(cookieParser());
+app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -20,7 +20,7 @@ exports.getBoardsByUserId = (req, res) => {
                     error: 'boards not found!'
                 })
             }
-            res.json({ boards })
+            res.json(boards)
         }
         )
 }
