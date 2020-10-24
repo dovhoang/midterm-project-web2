@@ -15,6 +15,7 @@ const app = express();
 const authRoute = require('./routes/authRoute');
 const boardRoute = require('./routes/boardRoute');
 const tagRoute = require('./routes/tagRoute');
+const userRoute = require('./routes/userRoute');
 
 // connect db
 mongoose
@@ -34,6 +35,7 @@ app.use(passport.session());
 
 //route middleware
 app.use('/api', authRoute);
+app.use('/api', userRoute);
 app.use('/api', boardRoute);
 app.use('/api', tagRoute);
 

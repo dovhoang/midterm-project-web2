@@ -16,6 +16,17 @@ const userSchema = new mongoose.Schema(
             required: true,
             maxlength: 32,
         },
+        email: {
+            type: String,
+            trim: true,
+            maxlength: 64,
+            unique: true,
+        },
+        team: {
+            type: String,
+            trim: true,
+            maxlength: 128
+        },
         hash_password: {
             type: String
         },

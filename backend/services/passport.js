@@ -32,7 +32,7 @@ passport.use(
 
             const user = await new User({
                 googleId: profile.id,
-                email: '',
+                email: profile.emails[0].email,
                 name: profile.name.familyName + ' ' + profile.name.givenName
             }).save();
             done(null, user);

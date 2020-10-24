@@ -62,4 +62,15 @@ exports.editTag = (req, res) => {
             res.json({ Message: `Tag is updated!` })
         })
 }
+exports.moveTag = (req, res) => {
+    const tag = req.tag;
+    const type = req.body.type
+    Tag.findByIdAndUpdate({ _id: tag._id }, { type: type })
+        .exec((error, tag) => {
+            if (error) {
+                return res.status(400).json({ error });
+            }
+            res.json({ message: "tag is moved!" })
+        })
+}
 
