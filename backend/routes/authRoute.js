@@ -8,7 +8,7 @@ const { signup, signin, signout, signinWithGoogle, requireSignin
 
 router.post('/signup', userSignupValidator, signup);
 router.post('/signin', signin);
-router.post('/signout', signout);
+router.get('/signout', signout);
 router.get('/profile', requireSignin, (req, res) => {
     res.send('profile');
 });

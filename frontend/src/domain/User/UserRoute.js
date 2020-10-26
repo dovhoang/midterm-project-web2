@@ -1,24 +1,23 @@
-import React from 'react'
-import { isAuthenticate } from './apiAuth'
-import { Route, Redirect } from 'react-router-dom'
+import React, { Component } from "react";
+import { Route, Redirect } from "react-router-dom";
+import { isAuthenticate } from "../Auth/apiAuth";
 
-const UserRoute = ({ children, ...rest }) => {
-    return (<Route
+const UserRoute = ({ component: Component, ...rest }) => (
+    <Route
         {...rest}
-        render={(props) => (
+        render={props =>
             isAuthenticate() ? (
-                children
+                <Component {...props} />
             ) : (
                     <Redirect
                         to={{
-                            pathname: '/signin',
+                            pathname: "/signin",
                             state: { from: props.location }
                         }}
                     />
                 )
-        )}
+        }
+    />
+);
 
-    />);
-};
-
-export default UserRoute; 
+export default UserRoute;

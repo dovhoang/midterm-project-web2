@@ -11,11 +11,10 @@ exports.signup = (req, res) => {
             error: 'Username đã tồn tại'
         });
         user.save((error, user) => {
-            user.salt = undefined;
-            user.hash_password = undefined;
-            res.json({
-                user: user
-            })
+            if (error) {
+                return res.status(400).json({ error });
+            }
+            res.json(user)
         })
 
     })

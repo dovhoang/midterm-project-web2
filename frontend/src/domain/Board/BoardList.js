@@ -4,6 +4,8 @@ import { API } from '../../config'
 import axios from 'axios'
 import { Button } from 'antd'
 import { AppstoreAddOutlined } from '@ant-design/icons'
+import { getBoardsListById } from './apiBoard'
+import { isAuthenticate } from '../Auth/apiAuth'
 
 
 const BoardList = () => {
@@ -11,14 +13,19 @@ const BoardList = () => {
     const [error, setError] = useState('')
 
     const getBoardsList = () => {
-        axios.get(`${API}/5f8ecda4bb869e42e07a5514/boards`)
-            .then(res => {
-                setBoardList(res.data);
-                setError('');
-            })
-            .catch(error => {
-                setError(error.response.data.error)
-            })
+        const jwt = isAuthenticate();
+        console.log(jwt)
+        if (jwt) {
+            getBoardsListById(jwt.user._id)
+                .then(res => {
+                    setBoardList(res.data);
+                    setError('');
+                })
+                .catch(error => {
+                    setError(error.response.data.error)
+                })
+        }
+
     }
 
     useEffect(() => {

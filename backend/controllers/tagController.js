@@ -24,17 +24,16 @@ exports.createTag = async (req, res) => {
 }
 
 exports.getTagsByBoardId = (req, res) => {
-    Tag.find({ board: req.board })
+    Tag.find({ board: req.board, type: req.query.type })
         .populate('board')
         .exec((error, tags) => {
             if (error || !tags) {
                 return res.status(400).json({
-                    error: 'tag not found!'
+                    error: 'tag list not found!'
                 })
             }
-            res.json({ tags })
-        }
-        )
+            res.json(tags);
+        })
 }
 
 exports.deleteTag = (req, res) => {
