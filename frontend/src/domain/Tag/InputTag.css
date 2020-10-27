@@ -29,9 +29,16 @@
     bottom: 12px;
     left: 12px;
     color: white;
-    background-color: #389e0d;
     cursor: pointer;
 }
+
+.error{
+    position: absolute;
+    color:red;
+    bottom: 12px;
+    right: 12px;
+}
 .done:hover{
-    background-color: #237804;
+    outline:none;
+    color: yellow
 }

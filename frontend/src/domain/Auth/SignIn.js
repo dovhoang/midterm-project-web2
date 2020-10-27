@@ -17,7 +17,7 @@ const SignIn = ({ setUserId }) => {
                 console.log(res.data);
                 setError('');
                 authenticate(res.data, () => {
-                    setUserId(res.data.user._id)
+                    //setUserId(res.data.user._id)
                     setCurrentUserId(res.data.user._id)
                 });
             })
@@ -79,7 +79,7 @@ const SignIn = ({ setUserId }) => {
                             },
                         ]}
                     >
-                        <Input.Password />
+                        <Input.Password visibilityToggle={false} />
                     </Form.Item>
                     <Form.Item  >
                         <Button type="primary" htmlType="submit">

@@ -5,17 +5,8 @@ import { deleteTag } from './apiTag'
 import './TagItem.css'
 import { connect } from 'react-redux'
 
-const TagItem = ({ type, item, deletedTag, editedTag }) => {
-    const bColor = () => {
-        if (type === 0) {
-            return '#fa8c16'
-        } else if (type === 1) {
-            return '#c41d7f'
-        } else if (type === 2) {
-            return '#389e0d'
-        }
-        return '#389e0d';
-    }
+const TagItem = ({ color, item, deletedTag, editedTag }) => {
+
 
     const handleDelete = () => {
         deleteTag(item._id)
@@ -29,8 +20,8 @@ const TagItem = ({ type, item, deletedTag, editedTag }) => {
     }
 
     return (
-        <Card className='tag' style={{ backgroundColor: bColor() }}>
-            <div className="control">
+        <Card className='tag' style={{ backgroundColor: color }}>
+            <div className="tag-control">
                 <span><EditOutlined onClick={handleEdit} /></span>
                 <span><DeleteOutlined onClick={handleDelete} /></span>
             </div>

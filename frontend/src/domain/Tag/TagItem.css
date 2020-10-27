@@ -6,18 +6,18 @@
     min-height:60px;
 
 }
-.control{
+.tag-control{
     position: absolute;
     top: 0px;
     right: 0px;
 }
 
-.control span{
+.tag-control span{
     margin: 2px 5px;
     cursor: pointer;
 }
-.control span:hover{
-    color: yellow;
+.tag-control span:hover{
+    color:blue;
 }
 .content{
     margin-top: 8x

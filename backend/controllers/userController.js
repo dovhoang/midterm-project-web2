@@ -13,7 +13,7 @@ exports.userById = (req, res, next, id) => {
 };
 
 exports.getProfile = (req, res) => {
-    req.user.hashed_password = undefined;
+    req.user.hashe_password = undefined;
     req.user.salt = undefined;
     return res.json(req.user);
 };
