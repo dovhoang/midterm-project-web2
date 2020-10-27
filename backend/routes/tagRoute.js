@@ -7,7 +7,7 @@ const { boardById } = require('../controllers/boardController')
 const { tagById, getTagsByBoardId, deleteTag, editTag, moveTag } = require('../controllers/tagController')
 
 router.post('/board/:boardId/tag/create', createTag);
-router.get('/board/:boardId', getTagsByBoardId);
+router.get('/board/:boardId/taglist', getTagsByBoardId);
 router.delete('/tag/:tagId/delete', deleteTag);
 router.put('/tag/:tagId/update', editTag);
 router.put('/tag/:tagId/move', moveTag);

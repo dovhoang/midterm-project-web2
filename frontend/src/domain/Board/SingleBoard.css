@@ -1,0 +1,10 @@
+.edit-name{
+    font-size: 22px;
+    height: 35px;
+    width: 30%;
+}
+.board-name{
+     font-size: 22px;
+     cursor:pointer;
+     font-weight: bold;
+}

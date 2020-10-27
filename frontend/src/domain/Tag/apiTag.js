@@ -2,7 +2,7 @@ import { API } from '../../config'
 import axios from 'axios'
 
 export const getTagsListByBoardId = (boardId, tagType) => {
-    return axios.get(`${API}/board/${boardId}?type=${tagType}`)
+    return axios.get(`${API}/board/${boardId}/taglist?type=${tagType}`)
 }
 
 export const createTag = (content, type, boardId) => {

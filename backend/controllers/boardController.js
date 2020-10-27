@@ -10,6 +10,10 @@ exports.boardById = (req, res, next, id) => {
     })
 }
 
+exports.getBoardById = (req, res) => {
+    res.json(req.board);
+}
+
 exports.getBoardsByUserId = (req, res) => {
 
     Board.find({ user: req.user })
@@ -37,14 +41,12 @@ exports.createBoard = async (req, res) => {
 
 exports.deleteBoard = (req, res) => {
     const board = req.board;
-    Board.findOneAndDelete({ board }, (error, boardDelete) => {
+    Board.findOneAndDelete({ _id: board._id }, (error, boardDelete) => {
         if (error) {
-            return res.status(400).json({
-                error
-            });
+            return res.status(400).json(error);
         }
         res.json({
-            message: `${boardDelete.name} deleted successfully`
+            message: `delete successfully`
         });
     })
 }

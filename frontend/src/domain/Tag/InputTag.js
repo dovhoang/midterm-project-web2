@@ -52,10 +52,9 @@ const InputTag = ({ item = undefined, type = undefined, color,
 
 }
 
-const mapStateToProps = (state) => {
-    console.log(state)
-    return { boardId: state.boardId }
-}
+const mapStateToProps = (state) => ({
+    boardId: state.tag.boardId
+})
 
 const mapDispatchToProps = (dispatch) => {
     return {

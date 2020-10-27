@@ -7,6 +7,9 @@ import InputTag from './InputTag'
 import { connect } from 'react-redux'
 
 const TagList = ({ type, list, tagEditId, openInput, tagAddType }) => {
+
+
+
     const handleButtonClick = () => {
         openInput(type);
     }
@@ -28,7 +31,7 @@ const TagList = ({ type, list, tagEditId, openInput, tagAddType }) => {
     }
 
     return (
-        <div className="col-lg-4 col-md-6 col-sm-12">
+        <div className="col-lg-4 col-md-6 col-sm-12 mt-3">
             <h5 style={{ color: bColor(), fontWeight: 'bold' }}>{listTagName()}</h5>
             <Button style={{ width: '100%' }} onClick={handleButtonClick}>
                 <PlusOutlined />
@@ -48,8 +51,8 @@ const TagList = ({ type, list, tagEditId, openInput, tagAddType }) => {
 }
 const mapStateToProps = (state) => {
     return {
-        tagEditId: state.tagEditId,
-        tagAddType: state.tagAddType
+        tagEditId: state.tag.tagEditId,
+        tagAddType: state.tag.tagAddType
     }
 }
 
