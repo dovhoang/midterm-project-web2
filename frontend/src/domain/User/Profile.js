@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getUserProfile } from './apiUser'
+import { isAuthenticate } from '../Auth/apiAuth'
 import UpdateProfile from './UpdateProfile'
 import ChangePassword from './ChangePassword'
 import './Profile.css'
@@ -11,7 +12,8 @@ const Profile = (props) => {
     const [showFormChangePassword, setShowFormChangePassword] = useState(false)
     const getProfile = () => {
         console.log(props.match.params.userId)
-        getUserProfile(props.match.params.userId)
+        const token = isAuthenticate().token;
+        getUserProfile(props.match.params.userId, token)
             .then(res => {
                 console.log(res.data)
                 setProfile(res.data);

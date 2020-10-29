@@ -21,7 +21,7 @@ passport.use(
     new GoogleStrategy({
         clientID: keys.googleClientID,
         clientSecret: keys.googleClientSecret,
-        callbackURL: '/api/auth/google/callback',
+        callbackURL: keys.google_callback_url,
         proxy: true
     },
         async (accessToken, refreshToken, profile, done) => {
@@ -42,7 +42,7 @@ passport.use(
 passport.use(new FacebookStrategy({
     clientID: keys.facebook_key,
     clientSecret: keys.facebook_secret,
-    callbackURL: keys.callback_url
+    callbackURL: keys.facebook_callback_url
 },
     function (accessToken, refreshToken, profile, done) {
         process.nextTick(async function () {

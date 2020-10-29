@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Input, Button, Checkbox, Card } from 'antd';
 import { Redirect } from 'react-router-dom'
-import { signin, authenticate } from './apiAuth'
+import { signin, authenticate, signinWithGoogle, signinWithFacebook } from './apiAuth'
 import { connect } from 'react-redux'
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
+import './Signin.css'
 
 
 const SignIn = ({ setUserId }) => {
@@ -17,7 +20,7 @@ const SignIn = ({ setUserId }) => {
                 console.log(res.data);
                 setError('');
                 authenticate(res.data, () => {
-                    //setUserId(res.data.user._id)
+                    setUserId(res.data.user._id);
                     setCurrentUserId(res.data.user._id)
                 });
             })
@@ -42,6 +45,43 @@ const SignIn = ({ setUserId }) => {
         if (currentUserId) {
             return <Redirect to={`/${currentUserId}/myboards`} exact />
         }
+    }
+
+    const responseSuccessGoogle = (response) => {
+        const { tokenId } = response;
+        console.log(response.googleId)
+        signinWithGoogle(tokenId).then(res => {
+            console.log(res.data);
+            authenticate(res.data, () => {
+                setUserId(res.data.user._id);
+                setCurrentUserId(res.data.user._id)
+            });
+        })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    const responseErrorGoogle = () => {
+
+    }
+    const responseFacebook = (response) => {
+        const { userID, name, email, accessToken } = response;
+        console.log(response)
+        signinWithFacebook(userID, name, email, accessToken)
+            .then(res => {
+                authenticate(res.data, () => {
+                    setUserId(res.data.user._id);
+                    setCurrentUserId(res.data.user._id)
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+    }
+
+    const componentClicked = () => {
+        console.log("button clicked!")
     }
 
     return (
@@ -82,9 +122,37 @@ const SignIn = ({ setUserId }) => {
                         <Input.Password visibilityToggle={false} />
                     </Form.Item>
                     <Form.Item  >
-                        <Button type="primary" htmlType="submit">
-                            Sign in
+                        <div className="local-login">
+                            <Button type="primary" htmlType="submit">
+                                Sign in
                         </Button>
+                        </div>
+                    </Form.Item>
+                    <Form.Item>
+                        <div className="row ">
+                            <div className="col-md-6 col-sm-12">
+                                <GoogleLogin
+                                    clientId="501610522296-9hulmt8l52p612p0s5th7k43jevlaqkr.apps.googleusercontent.com"
+                                    buttonText="Google"
+                                    onSuccess={responseSuccessGoogle}
+                                    onFailure={responseErrorGoogle}
+                                    className='google-login'
+                                    cookiePolicy={'single_host_origin'}
+                                />
+                            </div>
+                            <div className="col-md-6 col-sm-12">
+                                <FacebookLogin
+                                    appId="658011918241142"
+                                    autoLoad={false}
+                                    fields="id,name,email"
+                                    onClick={componentClicked}
+                                    callback={responseFacebook}
+                                    cssClass='facebook-login'
+                                    textButton="Facebook"
+                                    icon="fa-facebook mr-3" />
+                            </div>
+                        </div>
+
                     </Form.Item>
                     {showError()}
                     {rediectToHome()}

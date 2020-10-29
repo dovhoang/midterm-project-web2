@@ -8,6 +8,13 @@ export const signin = (user) => {
     return axios.post(`${API}/signin`, user)
 }
 
+export const signinWithGoogle = (tokenId) => {
+    return axios.post(`${API}/signin/google`, { tokenId })
+}
+export const signinWithFacebook = (userID, name, email, accessToken) => {
+    return axios.post(`${API}/signin/facebook`, { userID, name, email, accessToken })
+}
+
 export const signout = (next) => {
     if (typeof window !== 'undefinded') {
         localStorage.removeItem('jwt');

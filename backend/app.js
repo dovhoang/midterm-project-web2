@@ -5,10 +5,10 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
 const expressValidator = require('express-validator');
-const passport = require('passport');
+//const passport = require('passport');
 const port = process.env.PORT || 8000;
 require('dotenv').config();
-require('./services/passport');
+//require('./services/passport');
 
 const app = express();
 
@@ -32,8 +32,8 @@ app.use(bodyParser.json());
 app.use(expressValidator());
 app.use(cookieParser());
 app.use(cors());
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 
 //route middleware
 app.use('/api', authRoute);
@@ -42,6 +42,6 @@ app.use('/api', boardRoute);
 app.use('/api', tagRoute);
 
 app.listen(port, () => {
-    console.log(`http://localhost:${port}`);
+    console.log(`${port}`);
 })
 

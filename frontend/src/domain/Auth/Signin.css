@@ -1,0 +1,25 @@
+.facebook-login{
+    height: 40px;
+    width:100%;
+    background-color: #4267B2;
+    color: white;
+    margin: 10px 10px 0px;
+}
+.faceook-login i{
+    margin-right: 10px !important;
+}
+.google-login{
+    height: 40px;
+    width:100%;
+    margin: 10px 10px 0px;
+    display:flex;
+    justify-content: center;
+}
+
+.google-login div, span{
+     height: 40px;
+}
+.local-login{
+    display: flex;
+    justify-content: center;
+}

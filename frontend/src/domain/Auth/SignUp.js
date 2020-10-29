@@ -108,13 +108,12 @@ const SignUp = () => {
                     >
                         <Input.Password />
                     </Form.Item>
-
-
-
                     <Form.Item  >
-                        <Button type="primary" htmlType="submit">
-                            Sign up
-                </Button>
+                        <div className="d-flex justify-content-center">
+                            <Button type="primary" htmlType="submit">
+                                Sign up
+                        </Button>
+                        </div>
                     </Form.Item>
                     {showError()}
                     {showSuccess()}
