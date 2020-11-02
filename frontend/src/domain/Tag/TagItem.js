@@ -11,7 +11,8 @@ const TagItem = ({ color, item, deletedTag, editedTag }) => {
     const handleDelete = () => {
         deleteTag(item._id)
             .then(res => {
-                deletedTag();
+                console.log(res.data)
+                deletedTag(res.data);
             })
     }
 
@@ -34,8 +35,8 @@ const TagItem = ({ color, item, deletedTag, editedTag }) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deletedTag: () => dispatch({ type: 'BOARD_CHANGE' }),
-        editedTag: (id) => dispatch({ type: 'OPEN_INPUT_EDIT', tagEditId: id })
+        deletedTag: (tag) => dispatch({ type: 'DELETE_TAG', deletedTag: tag }),
+        editedTag: (id) => dispatch({ type: 'OPEN_EDIT_TAG', tagEditId: id })
     }
 }
 

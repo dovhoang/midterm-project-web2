@@ -25,11 +25,11 @@ const InputTag = ({ item = undefined, type = undefined, color,
             setError('Content is required!')
         } else if (item) {
             updateTag(item._id, content).then(res => {
-                updatedTag();
+                updatedTag(res.data);
             })
         } else {
             createTag(content, type, boardId).then(res => {
-                createdTag();
+                createdTag(res.data);
             })
         }
     }
@@ -58,8 +58,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createdTag: () => dispatch({ type: 'BOARD_CHANGE' }),
-        updatedTag: () => dispatch({ type: 'BOARD_CHANGE' }),
+        createdTag: (tag) => dispatch({ type: 'CLOSE_CREATE_TAG', createdTag: tag }),
+        updatedTag: (tag) => dispatch({ type: 'CLOSE_EDIT_TAG', updatedTag: tag }),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(InputTag);

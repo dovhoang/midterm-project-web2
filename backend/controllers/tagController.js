@@ -19,7 +19,7 @@ exports.createTag = async (req, res) => {
         if (error) {
             return res.status(400).json({ error });
         }
-        res.json({ tag });
+        res.json(tag);
     })
 }
 
@@ -44,21 +44,19 @@ exports.deleteTag = (req, res) => {
                 error
             });
         }
-        res.json({
-            message: `Tag deleted successfully`
-        });
+        res.json(tagDelete);
     })
 }
 
 exports.editTag = (req, res) => {
     const content = req.body.content;
     const tag = req.tag;
-    Tag.findOneAndUpdate({ _id: tag._id }, { content: content })
+    Tag.findOneAndUpdate({ _id: tag._id }, { content: content }, { new: true })
         .exec((error, tag) => {
             if (error) {
                 return res.status(400).json({ error });
             }
-            res.json({ Message: `Tag is updated!` })
+            res.json(tag)
         })
 }
 exports.moveTag = (req, res) => {
@@ -69,7 +67,7 @@ exports.moveTag = (req, res) => {
             if (error) {
                 return res.status(400).json({ error });
             }
-            res.json({ message: "tag is moved!" })
+            res.json(tag)
         })
 }
 

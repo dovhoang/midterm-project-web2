@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import TagItem from './TagItem'
 import InputTag from './InputTag'
-
+import { getTagsListByBoardId } from './apiTag'
 import { connect } from 'react-redux'
 
-const TagList = ({ type, list, tagEditId, openInput, tagAddType }) => {
-
-
+const TagList = ({ type, boardId, tagEditId, openInput, tagAddType, createdTag, updatedTag, deletedTag, resetUpdateData }) => {
+    const [list, setList] = useState([])
 
     const handleButtonClick = () => {
         openInput(type);
@@ -30,8 +29,47 @@ const TagList = ({ type, list, tagEditId, openInput, tagAddType }) => {
         return '#389e0d';
     }
 
+    const getList = () => {
+        getTagsListByBoardId(boardId, type).then(res => {
+            setList(res.data)
+        })
+    }
+
+    useEffect(() => {
+        getList();
+    }, [])
+
+
+    useEffect(() => {
+        console.log(updatedTag)
+        if (createdTag) {
+            if (createdTag.type === type)
+                setList([...list, createdTag]);
+        }
+
+        if (updatedTag) {
+            setList(list.map(item => {
+                if (item._id === updatedTag._id) {
+                    return updatedTag;
+                }
+                return item;
+            }));
+        }
+        if (deletedTag) {
+            console.log("delete")
+            setList(list.filter(item => item._id !== deletedTag._id));
+        }
+
+    }, [createdTag, updatedTag, deletedTag])
+
+    useEffect(() => {
+        resetUpdateData()
+    }, [list])
+
     return (
+
         <div className="col-lg-4 col-md-6 col-sm-12 mt-3">
+            {console.log(list)}
             <h5 style={{ color: bColor(), fontWeight: 'bold' }}>{listTagName()}</h5>
             <Button style={{ width: '100%' }} onClick={handleButtonClick}>
                 <PlusOutlined />
@@ -52,12 +90,16 @@ const TagList = ({ type, list, tagEditId, openInput, tagAddType }) => {
 const mapStateToProps = (state) => {
     return {
         tagEditId: state.tag.tagEditId,
-        tagAddType: state.tag.tagAddType
+        tagAddType: state.tag.tagAddType,
+        createdTag: state.tag.createdTag,
+        updatedTag: state.tag.updatedTag,
+        deletedTag: state.tag.deletedTag,
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    openInput: (type) => dispatch({ type: 'OPEN_INPUT_ADD', tagAddType: type })
+    openInput: (type) => dispatch({ type: 'OPEN_CREATE_TAG', tagAddType: type }),
+    resetUpdateData: () => dispatch({ type: 'RESET_UPDATE_DATA' })
 })
 
 
